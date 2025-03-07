@@ -9,14 +9,15 @@ int main()
 	// User instructions
 	std::cout << "This example renders the Mandelbrot Set." << std::endl;
 	std::cout << "Commands:" << std::endl;
-	std::cout << "\t- 'Left Click + Mouse' to pan" << std::endl;
+	std::cout << "\t- 'Left Click + Mouse' or 'arrows' to pan" << std::endl;
 	std::cout << "\t- 'Mouse Scroll Wheel' to zoom" << std::endl;
+	std::cout << "\t- 'Mouse Scroll Wheel + z' to fast zoom" << std::endl;
 	std::cout << "\t- 'r' to reset back to the Mandelbrot Set" << std::endl;
 	std::cout << 
 		"\t- 'q' and 'w' to increase/decrease the amount of iterations" << std::endl;
 
 	// Set the window's width and height if they are passed as command line arguments
-	Eigen::Vector2i windowSize(1280, 720);
+	Eigen::Vector2i windowSize(1270, 720);
 	// TODO: Add argc and argv command line arg functionality
 
 	// Create a fractal renderer window with a passed width and height

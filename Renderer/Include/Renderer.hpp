@@ -20,8 +20,6 @@ public:
 	void SetColorScheme(std::shared_ptr<ColoringInterface> colorScheme);
 
 	bool Process_frame();
-	void SetNumberThreads(int numThreads);
-
 #ifndef TESTER
 private:
 #endif
@@ -32,14 +30,14 @@ private:
 	void Recalc_pixel(double x, double y);
 	
 	void SmartRecalc(
-		Eigen::Vector2d old_center,
-		Eigen::Vector2d old_width);
+		Eigen::Vector2d& old_center,
+		Eigen::Vector2d& old_width);
+	void move(Eigen::Vector2d& old_center);
 	void move_on_x(Eigen::Vector2d old_center);
 	void move_on_y(Eigen::Vector2d old_center);
+	void change_scale(Eigen::Vector2d& old_width);
 	void increase(int zoom_val);
 	void decrease(int zoom_val);
-
-	void threading_function_call(void (*f)(int, int));
 
 	inline Eigen::Vector2d PixelDiff_to_CoordDiff(
 		Eigen::Vector2d pixel_diff);
@@ -64,10 +62,7 @@ private:
 	
 	Eigen::Vector2d width;
 
-	int numThreads_ = 15;
-
-	std::vector<std::vector<Eigen::Vector3d>> fractalMemory_;
-	std::vector<Eigen::Vector2d> pixel_need_recalc;
+	Eigen::Vector3d** fractalMemory_;
 
 	std::shared_ptr<Inputs> userInputs_;
 

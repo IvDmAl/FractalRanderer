@@ -8,8 +8,8 @@ public:
 	static void call(Func f, const std::string& name);
 	static void print();
 private:
-	static std::map<std::string, std::vector<double>> avg_times;
-	static std::map<std::string, std::vector<long long>> cnts;
+	static std::map<std::string, double> avg_times;
+	static std::map<std::string, long long> cnts;
 	static std::map<std::string, int> num_threads_data;
 	static const int max_num_threads;
 };

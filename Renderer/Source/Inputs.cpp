@@ -7,17 +7,17 @@ Inputs::Inputs(GLFWwindow* window)
 		window, this);
 }
 
-void Inputs::update_vals(Eigen::Vector2i windowSize,
-		Eigen::Vector2d center,
-		Eigen::Vector2d width) 
+void Inputs::update_vals(const Eigen::Vector2i& windowSize,
+		const Eigen::Vector2d& center,
+		const Eigen::Vector2d& width) 
 {
 	Eigen::Vector2d mouseRaw;
 	glfwGetCursorPos(window, &mouseRaw.x(), &mouseRaw.y());
 
-	mousePos.x() = center.x() + (mouseRaw.x() - windowSize.x() / 2) *
-		width.x() / windowSize.x();
-	mousePos.y() = center.y() + (mouseRaw.y() - windowSize.y() / 2) *
-		width.y() / windowSize.y();
+	mousePos.x() = center.x() + width.x() * 
+		(mouseRaw.x()/ windowSize.x() - 0.5);
+	mousePos.y() = center.y() - width.y() * 
+		(mouseRaw.y() / windowSize.y() - 0.5);
 }
 
 void Inputs::Reset_vals()
@@ -25,8 +25,8 @@ void Inputs::Reset_vals()
 	scrollwheel = 0;
 }
 
-bool Inputs::make_move(Eigen::Vector2i windowSize,
-	Eigen::Vector2d width,
+bool Inputs::make_move(const Eigen::Vector2i& windowSize,
+	const Eigen::Vector2d& width,
 	Eigen::Vector2d& center) 
 {	
 	bool was_changes = false;
@@ -101,7 +101,7 @@ bool Inputs::make_zoom(Eigen::Vector2d& width)
 
 bool Inputs::make_keyboards_commands(
 	std::shared_ptr<FractalInterface>& fractal,
-	Eigen::Vector2i windowSize,
+	const Eigen::Vector2i& windowSize,
 	Eigen::Vector2d& width,
 	Eigen::Vector2d& center) 
 {
@@ -118,7 +118,7 @@ bool Inputs::make_keyboards_commands(
 
 		was_changes = true;
 	}
-	if (pressedChar.find(GLFW_KEY_K) != pressedChar.end())
+	if (pressedChar.find(GLFW_KEY_W) != pressedChar.end())
 	{
 		iterationMultiplier /= 1.25;
 

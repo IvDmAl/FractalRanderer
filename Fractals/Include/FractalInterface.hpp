@@ -6,8 +6,7 @@ class FractalInterface
 public:
 	virtual double Evaluate(std::complex<double> c) = 0;
 	void SetMaxIterations(int maxIterations);
-
-	static long long cnt;
+	int GetMaxIterations();
 protected:
-	int maxIterations_ = 1000;
+	int maxIterations_ = 500;
 };
