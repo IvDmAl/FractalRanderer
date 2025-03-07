@@ -1,0 +1,12 @@
+#pragma once
+//#define DEBUG
+#include <GL/glew.h>
+#include <GLFW/glfw3.h>
+#include <map>
+#include <iostream>
+#include "Inputs.hpp"
+#include "WindowAndInputDataConnection.hpp"
+#include "Logs.hpp"
+#include "ThreadingFunctionCall.hpp"
+#include "TimeStatistic.hpp"
+#include "Renderer.hpp"
