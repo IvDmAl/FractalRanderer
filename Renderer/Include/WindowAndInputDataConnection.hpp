@@ -2,8 +2,7 @@
 
 #include "Inputs.hpp"
 #include <functional>
-#include <set>
-#include <map>
+#include <unordered_map>
 
 class WindowAndInputDataConnection
 {
@@ -23,5 +22,5 @@ public:
 		int key, int scancode, int action, int mods);
 
 private:
-	static std::map<GLFWwindow*, Inputs*> connections_;
+	static std::unordered_map<GLFWwindow*, Inputs*> connections_;
 };

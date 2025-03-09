@@ -53,7 +53,8 @@ bool Inputs::make_move(const Eigen::Vector2i& windowSize,
 			delta.x() += 0.1;
 		}
 		
-		center += delta.asDiagonal() * width;
+		center.x() += delta.x() * width.x();
+		center.y() += delta.y() * width.y();
 		was_changes = true;
 	}
 	else
@@ -65,13 +66,13 @@ bool Inputs::make_move(const Eigen::Vector2i& windowSize,
 
 		if (leftClick)
 		{
-			// Update the center of the fractal from the mouse's x diff and y diff
-			Eigen::Vector2d diffPos = mousePos - oldMousePos;
-			Eigen::Vector2d changeInPosition(
-				diffPos.x() / windowSize.x(),
-				-diffPos.y() / windowSize.y());
+			// Update the center of the fractal from the mouse's x diff and
+			// y diff
+			center.x() -= (mousePos.x() - oldMousePos.x()) *
+				width.x() / windowSize.x();
+			center.y() += (mousePos.y() - oldMousePos.y()) *
+				width.y() / windowSize.y();
 
-			center -= changeInPosition.asDiagonal() * width;
 			was_changes = true;
 		}
 		std::swap(oldMousePos, mousePos);
@@ -86,8 +87,7 @@ bool Inputs::make_zoom(Eigen::Vector2d& width)
 
 	if (pressedChar.find(GLFW_KEY_Z) == pressedChar.end())
 	{
-		double zoomAmount = std::max(0.00001, 1 - (scrollwheel * 0.1));
-		width *= zoomAmount;
+		width *= std::max(0.00001, 1 - (scrollwheel * 0.1));
 	}
 	else
 	{

@@ -14,6 +14,7 @@ class Renderer
 public:
 	Renderer(Eigen::Vector2i windowSize, 
 		const std::string& name = "Fractal Viewer");
+	~Renderer();
 
 	void SetFractal(std::shared_ptr<FractalInterface> fractal);
 	

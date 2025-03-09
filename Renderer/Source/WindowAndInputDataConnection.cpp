@@ -1,6 +1,6 @@
 #include "../Include/includes.hpp"
 
-std::map<GLFWwindow*, Inputs*> WindowAndInputDataConnection::connections_;
+std::unordered_map<GLFWwindow*, Inputs*> WindowAndInputDataConnection::connections_;
 
 void WindowAndInputDataConnection::connect_window_and_input_data(
 	GLFWwindow* window, Inputs* input_data)

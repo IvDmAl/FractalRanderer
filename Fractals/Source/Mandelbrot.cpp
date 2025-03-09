@@ -8,7 +8,9 @@ double Mandelbrot::Evaluate(std::complex<double> c)
 	for (double i = 0; i < maxIterations_; i++) {
 		z = z*z + c;
 
-		if (std::abs(z) > 2) {
+		double&& re = z.real();
+		double&& im = z.imag();
+		if (re * re + im * im > 4) {
 			return i / maxIterations_;
 		}
 	}

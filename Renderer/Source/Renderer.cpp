@@ -58,6 +58,13 @@ Renderer::Renderer(Eigen::Vector2i windowSize,
 		WindowAndInputDataConnection::KeyboardCallback);
 }
 
+Renderer::~Renderer()
+{
+	for (int i = 0; i < windowSize_.x(); ++i)
+		delete[] fractalMemory_[i];
+	delete[] fractalMemory_;
+}
+
 bool Renderer::Process_frame() {
 #ifdef DEBUG
 	TimeStatistic time_statistic("Renderer::Process_frame");
@@ -152,10 +159,9 @@ void Renderer::SmartRecalc(
 		}
 		else
 		{
-			Eigen::Vector2d cur_center = center;
-			center = old_center;
+			std::swap(center, old_center);
 			change_scale(old_width);
-			center = cur_center;
+			std::swap(center, old_center);
 			move(old_center);
 		}
 	}
@@ -205,27 +211,26 @@ void Renderer::move_on_x(Eigen::Vector2d old_center)
 		}
 		};
 
-  auto calc_x = [&, this](int y)
+	auto calc_y = [&](int phase, int num_threads) {
+		Eigen::Vector2d pos;
+		for (pos.y() = phase; pos.y() < windowSize_.y(); 
+			pos.y() += num_threads)
 		{
 			if (pixel_move.x() < 0)
 			{
-				for (int x = 0; x < windowSize_.x(); ++x)
+				for (pos.x() = 0; pos.x() < windowSize_.x(); ++pos.x())
 				{
-					calc(Eigen::Vector2d(x, y));
+					calc(pos);
 				}
 			}
 			else
 			{
-				for (int x = windowSize_.x() - 1; x >= 0; --x)
+				for (pos.x() = windowSize_.x() - 1; pos.x() >= 0; --pos.x())
 				{
-					calc(Eigen::Vector2d(x, y));
+					calc(pos);
 				}
 			}
-		};
-
-	auto calc_y = [&](int phase, int num_threads) {
-		for (int y = phase; y < windowSize_.y(); y += num_threads)
-			calc_x(y);
+		}
 		};
 
 	ThreadingFunctionCall::call(calc_y, "Renderer::move_on_x");
@@ -346,6 +351,10 @@ void Renderer::increase(int zoom_val)
 
 	ThreadingFunctionCall::call(copy, "Renderer::increase(copy)");
 	ThreadingFunctionCall::call(calc_all, "Renderer::increase(call)");
+
+	for (int i = 0; i < len.x(); ++i)
+		delete[] old_part[i];
+	delete[] old_part;
 }
 void Renderer::decrease(int zoom_val)
 {
@@ -404,10 +413,10 @@ void Renderer::decrease(int zoom_val)
 		};
 
 	ThreadingFunctionCall::call(copy, "Renderer::decrease(copy)");
-	for (int i = 0; i < windowSize_.x(); ++i)
-		for (int j = 0; j < windowSize_.y(); ++j)
-			fractalMemory_[i][j] = Eigen::Vector3d(1, 1, 1);
 	ThreadingFunctionCall::call(calc, "Renderer::decrease(calc)");
+	for (int i = 0; i < len.x(); ++i)
+		delete[] new_part[i];
+	delete[] new_part;
 }
 
 void Renderer::Recalc()

@@ -3,27 +3,35 @@
 void ColoringInterface::GetColor(double iterationRatio, 
 	Eigen::Vector3d& color)
 {
-	if (mandelbrotValues_.size() < 2)
+	if (colors.size() < 2)
 	{
 		return;
 	}
 
-	int p = 0;
-	for (p; p < mandelbrotValues_.size() - 1; p++)
+	int L = 0, R = colors.size(), mid;
+	while (L + 1 < R)
 	{
-		if (iterationRatio <= mandelbrotValues_[p + 1])
-			break;
+		mid = (R + L) >> 1;
+		if (iterationRatio <= colors[L + 1].first)
+			R = mid;
+		else
+			L = mid;
 	}
 
-	double blendAmount = (iterationRatio - mandelbrotValues_[p]) /
-		(mandelbrotValues_[p + 1] - mandelbrotValues_[p]);
+	double blendAmount = (iterationRatio - colors[L].first) /
+		(colors[L + 1].first - colors[L].first);
 
-	color = (colors[p + 1] - colors[p]) * blendAmount + colors[p];
+	color = (colors[L + 1].second - colors[L].second) *
+		blendAmount + colors[L].second;
 }
 
-void ColoringInterface::SetColorPoint(double mandelbrotValue, 
+void ColoringInterface::SetColorPoint(double mandelbrotValue,
 	double r, double g, double b)
 {
-	colors.push_back(Eigen::Vector3d(r, g, b));
-	mandelbrotValues_.push_back(mandelbrotValue);
+	colors.push_back({mandelbrotValue, Eigen::Vector3d(r, g, b)});
+	std::sort(colors.begin(), colors.end(), 
+		[](const std::pair<double, Eigen::Vector3d>& lhs,
+			const std::pair<double, Eigen::Vector3d>& rhs) {
+				return lhs.first < rhs.first;
+		});
 }

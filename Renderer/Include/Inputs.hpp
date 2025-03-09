@@ -1,7 +1,7 @@
 #pragma once
 
 #include <Eigen/Dense>
-#include <set>
+#include <unordered_set>
 #include <Fractals/Include/FractalInterface.hpp>
 
 struct Inputs
@@ -36,6 +36,6 @@ struct Inputs
 	// The scrollwheel of the mouse
 	double scrollwheel = 0;
 
-	std::set<int> pressedChar;
+	std::unordered_set<int> pressedChar;
 	GLFWwindow* window;
 };

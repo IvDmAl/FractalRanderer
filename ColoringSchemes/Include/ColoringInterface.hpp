@@ -11,6 +11,5 @@ public:
 		double r, double g, double b);
 
 private:
-	std::vector<Eigen::Vector3d> colors;
-	std::vector<double> mandelbrotValues_;
+	std::vector<std::pair<double, Eigen::Vector3d>> colors;
 };
