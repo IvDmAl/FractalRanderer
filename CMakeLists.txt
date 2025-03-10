@@ -14,8 +14,8 @@ add_subdirectory(ColoringSchemes)
 add_subdirectory(Fractals)
 add_subdirectory(Renderer)
 
-add_executable(render render.cpp)
-target_link_libraries(render
+add_executable(renderer_executable renderer.cpp)
+target_link_libraries(renderer_executable
 ColoringSchemes
 Fractals
 Renderer
