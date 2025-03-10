@@ -11,7 +11,7 @@ Setup:
 </h2>
 
 <p>
-To install, download the repository: https://github.com/IvDmAl/FractalRanderer.git
+To install, download the repository: https://github.com/IvDmAl/FractalRanderer.git <br>
 You will also need libraries such as GLEW, GLFW and Eigen3. To install them, use vcpkg or another package manager.
 </p>
 
