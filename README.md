@@ -22,5 +22,5 @@ Running the example:
 <p>
 To view the example, build the cmake project and run renderer_executable.
 You should see the following:
-<img src="https://github.com/IvDmAl/FractalRanderer/blob/make_readme/files_for_readme/first_image.png" />
+<img src="https://github.com/IvDmAl/FractalRanderer/blob/master/files_for_readme/first_image.png" />
 </p>
