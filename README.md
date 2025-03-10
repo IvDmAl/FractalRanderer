@@ -13,7 +13,11 @@ Setup:
 <h3>
 To install, download the repository: https://github.com/IvDmAl/FractalRanderer.git
 You will also need libraries such as GLEW, GLFW and Eigen3. To install them, use vcpkg or another package manager.
-<\h3>
+</h3>
+
+<h2>
+Running the example:
+</h2>
 
 <h3>
 To view the example, build the cmake project and run renderer_executable.
